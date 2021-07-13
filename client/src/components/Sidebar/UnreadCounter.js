@@ -4,12 +4,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, Chip } from "@material-ui/core";
 
 const Chart = ( { props } ) =>{
+    const [unreadConversationCount, setConversationCount] = useState(0);
 
     return (
         <>
-            <Chip
+        {
+            unreadConversationCount > 0 ? <Chip
                 color="primary"
-            />
+                label={unreadConversationCount}
+            /> : null
+
+        }
         </>
     )
 }
