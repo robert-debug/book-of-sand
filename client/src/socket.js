@@ -5,9 +5,7 @@ import {
   removeOfflineUser,
   addOnlineUser,
 } from "./store/conversations";
-console.log(window)
-console.log(window.location)
-console.log(window.location.origin)
+
 const socket = io(window.location.origin);
 
 socket.on("connect", () => {
