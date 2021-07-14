@@ -87,7 +87,7 @@ const reducer = (state = [], action) => {
     case REMOVE_OFFLINE_USER: {
       return removeOfflineUserFromStore(state, action.id);
     }
-    case READ_MESSAGE:{
+    case READ_MESSAGE: {
       return null
     }
     case SET_SEARCHED_USERS:

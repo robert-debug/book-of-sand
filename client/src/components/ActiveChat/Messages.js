@@ -14,7 +14,7 @@ const Messages = (props) => {
         return message.senderId === userId ? (
           <SenderBubble key={message.id} text={message.text} time={time} />
         ) : (
-          <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} />
+          <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} userId={userId} messageId={message.id} />
         );
       })}
     </Box>

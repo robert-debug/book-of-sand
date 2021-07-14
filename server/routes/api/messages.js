@@ -58,34 +58,15 @@ router.put("/", async (req, res, next) => {
       return res.sendStatus(401);
     }
     const senderId = req.user.id;
-    const { recipientId, sender } = req.body;
-    if (sender && senderId !== sender.id){
-    //making sure the sender is the sender
+    const { recipientId, messageId } = req.body;
+    if (recipientId !== req.user.id){
+    //making sure the receiver is the receiver
       return res.sendStatus(401);;
     }
-    let conversationId;
-    // getting the conversation, if their is one
-    let conversation = await Conversation.findConversation(
-      senderId,
-      recipientId
-    );
-
-    if (!conversation) {
-      console.log('Cannot update read status without logged in user')
-      return res.sendStatus(405);
-    } else {
-      // this no longer uses the conversationId sent from the socket, to avoid third users posting to chats, but rather just uses conversation ID from db
-      conversationId = conversation.id;
-      const messages = await Message.findAll({
-        where:{ conversationId, unread: true }
-      });
-      messages.forEach(async (message) =>{
-        message.unread = false;
-        await message.save()
-      })
-      return res.json({ id: conversation.id });
-    } 
-
+    let message = await Message.findByPk(messageId);
+    message.unread = false;
+    await message.save()
+    return res.json({ id: conversation.id });
   } catch (error) {
     next(error);
   }

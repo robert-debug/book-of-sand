@@ -84,8 +84,8 @@ const saveMessage = async (body) => {
   return data;
 };
 
-export const readMessage = async (dispatch) => {
-  const { data } = await axios.put("/api/messages");
+export const readMessage = async (dispatch, body) => {
+  const { data } = await axios.put("/api/messages", body);
   dispatch(seenMessage(data))
   return data;
 };
@@ -94,7 +94,7 @@ const sendMessage = (data, body) => {
   socket.emit("new-message", {
     message: data.message,
     recipientId: body.recipientId,
-    sender: data.sender,
+    sender: data.sender
   });
 };
 
