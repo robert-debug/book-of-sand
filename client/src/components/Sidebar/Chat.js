@@ -22,22 +22,20 @@ const styles = {
 let counter = 0;
 
 class Chat extends Component {
-  handleClick = async (conversation, counter) => {
-    counter = 0;
+  handleClick = async (conversation) => {
     await this.props.setActiveChat(conversation.otherUser.username);
   };
 
   render() {
     const { classes } = this.props;
     const otherUser = this.props.conversation.otherUser;
+    let counter = 0;
     this.props.conversation.messages.forEach((message)=>{
-      console.log(this.props)
-        if (this.props.user && this.props.user.id !== message.senderId && message.unread === true){
+        if (this.props.conversation.otherUser.id === message.senderId && message.unread === true){
             counter += 1;
-            console.log('bang!')
         }
     })
-    console.log('$$$$$$$$$$$$$$$$$$$$$$$$', counter)
+
     return (
       <Box
         onClick={() => this.handleClick(this.props.conversation, counter)}
@@ -50,18 +48,17 @@ class Chat extends Component {
           sidebar={true}
         />
         <ChatContent conversation={this.props.conversation} />
-        <UnreadCounter conversation={this.props.counter}/>
+        <UnreadCounter counter={counter}/>
       </Box>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch, state) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     setActiveChat: (id) => {
       dispatch(setActiveChat(id));
     },
-    user: state.user
   };
 };
 // const mapStateToProps = (state) =>({

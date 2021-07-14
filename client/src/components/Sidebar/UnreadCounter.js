@@ -4,6 +4,7 @@ import { Box, Chip } from "@material-ui/core";
 
 const UnreadCounter = ( { counter } ) =>{
     const [unreadConversationCount, setConversationCount] = useState(0);
+    console.log(counter)
     // console.log(conversation)
     // const user = useSelector(state => state.user)
     // console.log(user)
@@ -22,7 +23,7 @@ const UnreadCounter = ( { counter } ) =>{
         {
             unreadConversationCount > 0 ? <Chip
                 color="primary"
-                label={unreadConversationCount}
+                label={counter}
             /> : null
 
         }
