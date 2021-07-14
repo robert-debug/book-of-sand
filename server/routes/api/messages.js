@@ -51,17 +51,17 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.patch("/", async (req, res, next) => {
+router.put("/", async (req, res, next) => {
   
   try {
     if (!req.user) {
       return res.sendStatus(401);
     }
     const senderId = req.user.id;
-    const { recipientId, text, sender } = req.body;
+    const { recipientId, sender } = req.body;
     if (sender && senderId !== sender.id){
     //making sure the sender is the sender
-      return res.sendStatus(401);
+      return res.sendStatus(401);;
     }
     let conversationId;
     // getting the conversation, if their is one
@@ -71,29 +71,21 @@ router.patch("/", async (req, res, next) => {
     );
 
     if (!conversation) {
-      // create conversation
-      conversation = await Conversation.create({
-        user1Id: senderId,
-        user2Id: recipientId,
-      });
-      if (onlineUsers.includes(sender.id)) {
-        sender.online = true;
-      }
+      console.log('Cannot update read status without logged in user')
+      return res.sendStatus(405);
     } else {
       // this no longer uses the conversationId sent from the socket, to avoid third users posting to chats, but rather just uses conversation ID from db
       conversationId = conversation.id;
-      const message = await Message.create({ senderId, text, conversationId, unread: true });
-      return res.json({ message, sender });
+      const messages = await Message.findAll({
+        where:{ conversationId, unread: true }
+      });
+      messages.forEach(async (message) =>{
+        message.unread = false;
+        await message.save()
+      })
+      return res.json({ unread: false });
     } 
 
-
-    const message = await Message.create({
-      senderId,
-      text,
-      conversationId: conversation.id,
-      unread: true
-    });
-    res.json({ message, sender });
   } catch (error) {
     next(error);
   }
