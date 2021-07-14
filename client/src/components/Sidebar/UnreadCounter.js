@@ -24,6 +24,7 @@ const UnreadCounter = ( { counter } ) =>{
             unreadConversationCount > 0 ? <Chip
                 color="primary"
                 label={counter}
+                size='small'
             /> : null
 
         }
