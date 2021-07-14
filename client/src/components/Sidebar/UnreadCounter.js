@@ -1,12 +1,22 @@
-import React from "react";
 import React, {useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Chip } from "@material-ui/core";
 
-const UnreadCounter = ( { props } ) =>{
+const UnreadCounter = ( { counter } ) =>{
     const [unreadConversationCount, setConversationCount] = useState(0);
-    const state = useSelector(state => state.conversations)
-    console.log(state)
+    // console.log(conversation)
+    // const user = useSelector(state => state.user)
+    // console.log(user)
+    // let counter = 0;
+    // conversation.messages.forEach((message)=>{
+    //     if (user.id !== message.senderId && message.unread === true){
+    //         counter += 1;
+    //     }
+    // })
+    useEffect(()=>{
+        setConversationCount(counter)
+    },[])
+    
     return (
         <>
         {
