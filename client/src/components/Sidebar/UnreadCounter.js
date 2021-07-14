@@ -3,9 +3,10 @@ import React, {useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Chip } from "@material-ui/core";
 
-const Chart = ( { props } ) =>{
+const UnreadCounter = ( { props } ) =>{
     const [unreadConversationCount, setConversationCount] = useState(0);
-    const 
+    const state = useSelector(state => state.conversations)
+    console.log(state)
     return (
         <>
         {
@@ -18,4 +19,4 @@ const Chart = ( { props } ) =>{
         </>
     )
 }
-export default Chart;
+export default UnreadCounter;
