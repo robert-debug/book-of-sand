@@ -83,7 +83,7 @@ router.put("/", async (req, res, next) => {
         message.unread = false;
         await message.save()
       })
-      return res.json({ unread: false });
+      return res.json({ id: conversation.id });
     } 
 
   } catch (error) {
