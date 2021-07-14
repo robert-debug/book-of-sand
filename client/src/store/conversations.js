@@ -15,7 +15,7 @@ const REMOVE_OFFLINE_USER = "REMOVE_OFFLINE_USER";
 const SET_SEARCHED_USERS = "SET_SEARCHED_USERS";
 const CLEAR_SEARCHED_USERS = "CLEAR_SEARCHED_USERS";
 const ADD_CONVERSATION = "ADD_CONVERSATION";
-
+const READ_MESSAGE = "READ_MESSAGE";
 // ACTION CREATORS
 
 export const gotConversations = (conversations) => {
@@ -24,6 +24,12 @@ export const gotConversations = (conversations) => {
     conversations,
   };
 };
+
+export const seenMessage = (id) => {
+  return {
+    type: READ_MESSAGE
+  }
+}
 
 export const setNewMessage = (message, sender) => {
   return {
@@ -80,6 +86,9 @@ const reducer = (state = [], action) => {
     }
     case REMOVE_OFFLINE_USER: {
       return removeOfflineUserFromStore(state, action.id);
+    }
+    case READ_MESSAGE:{
+      return null
     }
     case SET_SEARCHED_USERS:
       return addSearchedUsersToStore(state, action.users);
