@@ -63,10 +63,15 @@ router.put("/", async (req, res, next) => {
     //making sure the receiver is the receiver
       return res.sendStatus(401);;
     }
+    let conversation = await Conversation.findConversation(
+      senderId,
+      recipientId
+    );
+
     let message = await Message.findByPk(messageId);
     message.unread = false;
     await message.save()
-    return res.json({ id: conversation.id });
+    return res.json({ id: message.id, conversationId: conversation.id });
   } catch (error) {
     next(error);
   }

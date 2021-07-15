@@ -1,6 +1,8 @@
 import React, {useEffect, useState } from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Avatar } from "@material-ui/core";
+import { readMessage } from '../../store/utils/thunkCreators';
+import { useSelector, useDispatch } from 'react-redux'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -33,10 +35,11 @@ const useStyles = makeStyles(() => ({
 
 const OtherUserBubble = (props) => {
   const classes = useStyles();
-  const { text, time, otherUser, userId } = props;
-
+  const { text, time, otherUser, userId, messageId } = props;
+  const body = { recipientId: userId, messageId }
+  const dispatch = useDispatch();
   useEffect(()=>{
-    
+    dispatch(readMessage(body))
   },[])
   return (
     <Box className={classes.root}>
