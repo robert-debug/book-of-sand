@@ -26,10 +26,11 @@ export const gotConversations = (conversations) => {
   };
 };
 
-export const seenMessage = (id, conversationId) => {
+export const seenMessage = (data) => {
   return {
     type: READ_MESSAGE,
-    payload: {id, conversationId}
+    id: data.id, 
+    conversationId: data.conversationId
   };
 };
 
