@@ -26,12 +26,11 @@ export const addMessageToStore = (state, payload) => {
 };
 
 export const markMessagesRead = (state, id, conversationId) =>{
-  console.log(state, id, conversationId)
+
   return state.map((convo) => {
-    console.log(convo.messages)
+
     if (convo.id === conversationId) {
       convo.messages = convo.messages.map((message)=>{
-        console.log(message)
         if (message && message.id === id){
           message.unread = false;
         }

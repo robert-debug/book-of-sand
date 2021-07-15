@@ -14,7 +14,7 @@ const UnreadCounter = ( { counter, conversation } ) =>{
         });
         return counter;
     })
-    console.log(conversationLength)
+
     useEffect(()=>{
         setConversationCount(0)
     },[activeConversation])
