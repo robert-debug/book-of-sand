@@ -23,6 +23,7 @@ let counter = 0;
 
 class Chat extends Component {
   handleClick = async (conversation) => {
+    counter = 0;
     await this.props.setActiveChat(conversation.otherUser.username);
   };
 
@@ -48,7 +49,7 @@ class Chat extends Component {
           sidebar={true}
         />
         <ChatContent conversation={this.props.conversation} />
-        <UnreadCounter counter={counter}/>
+        <UnreadCounter conversation={this.props.conversation} counter={counter}/>
       </Box>
     );
   }
