@@ -4,7 +4,6 @@ const onlineUsers = require("../../onlineUsers");
 
 // expects {recipientId, text, conversationId } in body (conversationId will be null if no conversation exists yet)
 router.post("/", async (req, res, next) => {
-  
   try {
     if (!req.user) {
       return res.sendStatus(401);
@@ -52,23 +51,22 @@ router.post("/", async (req, res, next) => {
 });
 
 router.put("/", async (req, res, next) => {
-  
   try {
     if (!req.user) {
       return res.sendStatus(401);
     }
-    const senderId = req.user.id;
     const { recipientId, messageId } = req.body;
     if (recipientId !== req.user.id){
-    //making sure the receiver is the receiver
-      return res.sendStatus(401);;
+      //making sure the receiver is the receiver
+      return res.sendStatus(401);
     }
+    let message = await Message.findByPk(messageId);
+    const senderId = message.senderId;
     let conversation = await Conversation.findConversation(
       senderId,
       recipientId
-    );
+      );
 
-    let message = await Message.findByPk(messageId);
     message.unread = false;
     await message.save()
     return res.json({ id: message.id, conversationId: conversation.id });

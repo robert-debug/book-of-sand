@@ -37,9 +37,10 @@ const OtherUserBubble = (props) => {
   const classes = useStyles();
   const { text, time, otherUser, userId, messageId } = props;
   const body = { recipientId: userId, messageId }
+  console.log(body)
   const dispatch = useDispatch();
   useEffect(()=>{
-    dispatch(readMessage(body))
+    dispatch(readMessage(dispatch, body))
   },[])
   return (
     <Box className={classes.root}>

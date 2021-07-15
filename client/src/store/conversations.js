@@ -29,10 +29,9 @@ export const gotConversations = (conversations) => {
 export const seenMessage = (id, conversationId) => {
   return {
     type: READ_MESSAGE,
-    conversationId,
-    id
-  }
-}
+    payload: {id, conversationId}
+  };
+};
 
 export const setNewMessage = (message, sender) => {
   return {
