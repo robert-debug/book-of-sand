@@ -84,7 +84,7 @@ const saveMessage = async (body) => {
   return data;
 };
 
-export const readMessage = async (dispatch, body) => {
+export const readMessage = (body) => async (dispatch) => {
   console.log(body)
   console.log(seenMessage)
   const { data } = await axios.put("/api/messages", body);

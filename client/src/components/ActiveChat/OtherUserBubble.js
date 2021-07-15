@@ -40,7 +40,7 @@ const OtherUserBubble = (props) => {
   console.log(body)
   const dispatch = useDispatch();
   useEffect(()=>{
-    dispatch(readMessage(dispatch, body))
+    dispatch(readMessage(body))
   },[])
   return (
     <Box className={classes.root}>
