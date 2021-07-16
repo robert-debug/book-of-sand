@@ -4,19 +4,19 @@ const onlineUsers = require("../../onlineUsers");
 
 // expects {recipientId, text, conversationId } in body (conversationId will be null if no conversation exists yet)
 router.post("/", async (req, res, next) => {
+  
   try {
     if (!req.user) {
       return res.sendStatus(401);
     }
     const senderId = req.user.id;
-    const { recipientId, text, conversationId, sender } = req.body;
-
-    // if we already know conversation id, we can save time and just add it to message and return
-    if (conversationId) {
-      const message = await Message.create({ senderId, text, conversationId });
-      return res.json({ message, sender });
+    const { recipientId, text, sender } = req.body;
+    if (sender && senderId !== sender.id){
+    //making sure the sender is the sender
+      return res.sendStatus(401);
     }
-    // if we don't have conversation id, find a conversation to make sure it doesn't already exist
+    let conversationId;
+    // getting the conversation, if their is one
     let conversation = await Conversation.findConversation(
       senderId,
       recipientId
@@ -31,7 +31,14 @@ router.post("/", async (req, res, next) => {
       if (onlineUsers.includes(sender.id)) {
         sender.online = true;
       }
-    }
+    } else {
+      // this no longer uses the conversationId sent from the socket, to avoid third users posting to chats, but rather just uses conversation ID from db
+      conversationId = conversation.id;
+      const message = await Message.create({ senderId, text, conversationId });
+      return res.json({ message, sender });
+    } 
+
+
     const message = await Message.create({
       senderId,
       text,

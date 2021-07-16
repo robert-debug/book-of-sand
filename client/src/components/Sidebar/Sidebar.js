@@ -30,7 +30,9 @@ const Sidebar = (props) => {
       <Typography className={classes.title}>Chats</Typography>
       <Search handleChange={handleChange} />
       {conversations
-        .filter((conversation) => conversation.otherUser.username.includes(searchTerm))
+        .filter((conversation) => conversation.otherUser.username.includes(searchTerm)).sort((conversationA, conversationB)=>{
+          return new Date(conversationB.latestCreatedMessage) - new Date(conversationA.latestCreatedMessage)
+        })
         .map((conversation) => {
           return <Chat conversation={conversation} key={conversation.otherUser.username} />;
         })}
