@@ -1,12 +1,11 @@
 import io from "socket.io-client";
-import { token } from sessionStorage
 import store from "./store";
 import {
   setNewMessage,
   removeOfflineUser,
   addOnlineUser,
 } from "./store/conversations";
-
+const token = localStorage.getItem("messenger-token")
 const socket = io(window.location.origin, {query: {token}});
 
 socket.on("connect", () => {
