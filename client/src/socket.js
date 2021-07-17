@@ -1,4 +1,5 @@
 import io from "socket.io-client";
+import { token } from sessionStorage
 import store from "./store";
 import {
   setNewMessage,
@@ -6,7 +7,7 @@ import {
   addOnlineUser,
 } from "./store/conversations";
 
-const socket = io(window.location.origin);
+const socket = io(window.location.origin, {query: {token}});
 
 socket.on("connect", () => {
   console.log("connected to server");
