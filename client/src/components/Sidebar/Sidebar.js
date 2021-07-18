@@ -2,8 +2,8 @@ import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { Search, Chat, CurrentUser, FunctionalSearch } from "./index.js";
-import { withStyles } from "@material-ui/core/styles";
+import { CurrentUser, FunctionalSearch, FunctionalChat } from "./index.js";
+
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,13 +29,13 @@ const Sidebar = (props) => {
     <Box className={classes.root}>
       <CurrentUser />
       <Typography className={classes.title}>Chats</Typography>
-      <Search handleChange={handleChange} />
+      <FunctionalSearch handleChange={handleChange} />
       {conversations
         .filter((conversation) => conversation.otherUser.username.includes(searchTerm)).sort((conversationA, conversationB)=>{
           return new Date(conversationB.latestCreatedMessage) - new Date(conversationA.latestCreatedMessage)
         })
         .map((conversation) => {
-          return <Chat conversation={conversation} key={conversation.otherUser.username} />;
+          return <FunctionalChat conversation={conversation} key={conversation.otherUser.username} />;
         })}
     </Box>
   );
