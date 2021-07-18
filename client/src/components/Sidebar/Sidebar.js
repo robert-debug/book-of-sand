@@ -2,7 +2,8 @@ import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { Search, Chat, CurrentUser } from "./index.js";
+import { Search, Chat, CurrentUser, FunctionalSearch } from "./index.js";
+import { withStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
   root: {

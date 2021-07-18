@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
-import { Input, Header, Messages } from "./index";
+import { Input, Header, Messages, FunctionalInput } from "./index";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles(() => ({
@@ -39,7 +39,7 @@ const ActiveChat = (props) => {
               otherUser={conversation.otherUser}
               userId={user.id}
             />
-            <Input
+            <FunctionalInput
               otherUser={conversation.otherUser}
               user={user}
             />
