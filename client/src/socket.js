@@ -5,7 +5,8 @@ import {
   removeOfflineUser,
   addOnlineUser,
 } from "./store/conversations";
-const token = localStorage.getItem("session")
+const token = localStorage.getItem("messenger-token")
+console.log(token)
 const socket = io(window.location.origin, { query: { token }, reconnectionDelayMin:10000, transport: ['websocket'] });
 
 socket.on("connect", () => {
