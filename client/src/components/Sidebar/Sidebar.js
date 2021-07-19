@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { CurrentUser, FunctionalSearch, FunctionalChat } from "./index.js";
+import { CurrentUser, Search, Chat } from "./index.js";
 
 
 const useStyles = makeStyles(() => ({
@@ -29,13 +29,13 @@ const Sidebar = (props) => {
     <Box className={classes.root}>
       <CurrentUser />
       <Typography className={classes.title}>Chats</Typography>
-      <FunctionalSearch handleChange={handleChange} />
+      <Search handleChange={handleChange} />
       {conversations
         .filter((conversation) => conversation.otherUser.username.includes(searchTerm)).sort((conversationA, conversationB)=>{
           return new Date(conversationB.latestCreatedMessage) - new Date(conversationA.latestCreatedMessage)
         })
         .map((conversation) => {
-          return <FunctionalChat conversation={conversation} key={conversation.otherUser.username} />;
+          return <Chat conversation={conversation} key={conversation.otherUser.username} />;
         })}
     </Box>
   );
