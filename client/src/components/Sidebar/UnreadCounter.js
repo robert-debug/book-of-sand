@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Box, Chip } from "@material-ui/core";
+import { useSelector } from 'react-redux';
+import { Chip } from "@material-ui/core";
 
 const UnreadCounter = ( { counter, conversation } ) =>{
     const [unreadConversationCount, setConversationCount] = useState(0);
@@ -14,7 +14,6 @@ const UnreadCounter = ( { counter, conversation } ) =>{
         });
         return counter;
     })
-
     useEffect(()=>{
         setConversationCount(0)
     },[activeConversation])
@@ -27,7 +26,7 @@ const UnreadCounter = ( { counter, conversation } ) =>{
     return (
         <>
         {
-            unreadConversationCount > 0 ? <Chip
+            unreadConversationCount > 0 && activeConversation !== conversation.otherUser.username  ? <Chip
                 color="primary"
                 label={unreadConversationCount}
                 size='small'
