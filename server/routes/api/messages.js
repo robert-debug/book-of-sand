@@ -58,11 +58,11 @@ router.put("/", async (req, res, next) => {
     const { recipientId, messageId } = req.body;
     if (recipientId !== req.user.id){
       //making sure the receiver is the receiver
-      return res.sendStatus(401);
+      return res.sendStatus(403);
     }
-    let message = await Message.findByPk(messageId);
+    const message = await Message.findByPk(messageId);
     const senderId = message.senderId;
-    let conversation = await Conversation.findConversation(
+    const conversation = await Conversation.findConversation(
       senderId,
       recipientId
       );
