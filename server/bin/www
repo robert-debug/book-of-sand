@@ -36,7 +36,7 @@ const io = require("socket.io")(server);
 io.use((socket, next) => {
   const token = socket.handshake.query.token;
   if (socket.handshake.query && token){
-    jwt.verify(socket.handshake.query.token, process.env.SECRET_KEY, function(err, decoded) {
+    jwt.verify(socket.handshake.query.token, process.env.SESSION_SECRET, function(err, decoded) {
       if (err) return next(new Error('AUTH FAILED'));
       socket.decoded = decoded;
       next();
@@ -55,9 +55,6 @@ io.on("connection", (socket) => {
     // send the user who just went online to everyone else who is already online
     socket.broadcast.emit("add-online-user", id);
   });
-  const session = socket.request.session;
-  session.connections++;
-  session.save();
 
   socket.on("new-message", (data) => {
     socket.to(`room ${data.recipientId}`).emit("new-message", {
@@ -73,7 +70,6 @@ io.on("connection", (socket) => {
     }
   });
 });
-console.log(sessionStore)
 sessionStore
   .sync()
   .then(() => db.sync())
