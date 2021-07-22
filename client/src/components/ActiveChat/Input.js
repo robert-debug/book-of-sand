@@ -12,13 +12,14 @@ const useStyles = makeStyles(() => ({
     height: 70,
     borderRadius: 8,
     marginBottom: 20,
+    marginTop: 15,
 },
 }));
 
 const theme = createTheme(
   {
     spacing:{
-      my: 1005,
+      my: 10,
     },
     palette: {
       main: "#F4F6FA",

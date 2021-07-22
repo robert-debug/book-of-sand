@@ -11,6 +11,8 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     justifyContent: "center",
     marginBottom: 20,
+    fontSize: 13,
+    fontWeight: "bold"
   },
   input: {
     "&::placeholder": {
