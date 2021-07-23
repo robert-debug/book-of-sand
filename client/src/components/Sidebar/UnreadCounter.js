@@ -4,18 +4,8 @@ import { Chip } from "@material-ui/core";
 
 const UnreadCounter = ( { conversation, conversationLength, messageCountObj  } ) =>{
     const [unreadConversationCount, setConversationCount] = useState(0);
-    console.log(unreadConversationCount)
-    console.log(unreadConversationCount)
     const activeConversation = useSelector(state => state.activeConversation)
-    // const conversationLength = useSelector(state => {
-    //     let count = 0
-    //     state.conversations.forEach((convo)=>{
-    //         convo.messages.forEach((message)=>{
-    //             count += 1;
-    //         })
-    //     });
-    //     return count;
-    // })
+
     useEffect(()=>{
         setConversationCount(0)
     },[activeConversation])
