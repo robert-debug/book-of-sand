@@ -37,10 +37,12 @@ const Input =(props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
+    
     const reqBody = {
       text,
       recipientId: props.otherUser.id,
       sender: props.user,
+      conversationId: props.conversationId ? props.conversationId : null,
     };
     await dispatch(postMessage(reqBody));
     setText('')

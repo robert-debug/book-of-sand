@@ -2,24 +2,24 @@ import React, {useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Chip } from "@material-ui/core";
 
-const UnreadCounter = ( { counter, conversation } ) =>{
+const UnreadCounter = ( { conversation, conversationLength, messageCountObj  } ) =>{
     const [unreadConversationCount, setConversationCount] = useState(0);
     const activeConversation = useSelector(state => state.activeConversation)
-    const conversationLength = useSelector(state => {
-        let counter = 0;
-        state.conversations.forEach((convo)=>{
-            convo.messages.forEach((message)=>{
-                counter += 1;
-            })
-        });
-        return counter;
-    })
+    // const conversationLength = useSelector(state => {
+    //     let count = 0
+    //     state.conversations.forEach((convo)=>{
+    //         convo.messages.forEach((message)=>{
+    //             count += 1;
+    //         })
+    //     });
+    //     return count;
+    // })
     useEffect(()=>{
         setConversationCount(0)
     },[activeConversation])
 
     useEffect(()=>{
-        setConversationCount(counter)
+        setConversationCount(messageCountObj[conversation.id])
     },[conversationLength])
     
 

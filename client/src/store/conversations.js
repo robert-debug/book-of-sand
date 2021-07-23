@@ -34,10 +34,10 @@ export const seenMessage = (data) => {
   };
 };
 
-export const setNewMessage = (message, sender) => {
+export const setNewMessage = (message, sender, conversationId) => {
   return {
     type: SET_MESSAGE,
-    payload: { message, sender: sender || null },
+    payload: { message, sender: sender || null, conversationId: conversationId || null },
   };
 };
 

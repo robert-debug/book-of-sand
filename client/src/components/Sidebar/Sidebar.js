@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -24,7 +25,23 @@ const Sidebar = (props) => {
   const classes = useStyles();
   const conversations = props.conversations || [];
   const { handleChange, searchTerm } = props;
-
+  const messageCountObj = {} 
+  let count = 0
+  const conversationLength = useSelector(state => {
+    state.conversations.forEach((convo)=>{
+      if(!messageCountObj[convo.id]){
+        messageCountObj[convo.id] = 0
+      }
+        convo.messages.forEach((message)=>{
+            count += 1;
+            if (messageCountObj && message.unread){
+              messageCountObj[convo.id] += 1
+            } 
+        })
+    });
+    return count;
+})
+  console.log(conversations)
   return (
     <Box className={classes.root}>
       <CurrentUser />
@@ -35,7 +52,7 @@ const Sidebar = (props) => {
           return new Date(conversationB.latestCreatedMessage) - new Date(conversationA.latestCreatedMessage)
         })
         .map((conversation) => {
-          return <Chat conversation={conversation} key={conversation.otherUser.username} />;
+          return <Chat conversation={conversation} key={conversation.otherUser.username} conversationLength={conversationLength} messageCountObj={messageCountObj} />;
         })}
     </Box>
   );
