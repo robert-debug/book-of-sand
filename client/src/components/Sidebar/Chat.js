@@ -2,8 +2,11 @@ import React from "react";
 import { Box } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
 import { setActiveChat } from "../../store/activeConversation";
+import { connect } from "react-redux";
+import UnreadCounter from "./UnreadCounter";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
+
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -19,9 +22,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+let counter = 0;
+
 const Chat = (props)=>{ 
     const dispatch = useDispatch()
     const handleClick = async (conversation) => {
+      counter = 0;
         await dispatch(setActiveChat(conversation.otherUser.username));
     };
     const classes  = useStyles();
@@ -39,6 +45,7 @@ const Chat = (props)=>{
           sidebar={true}
         />
         <ChatContent conversation={props.conversation} />
+        <UnreadCounter conversation={props.conversation} counter={counter}/>
       </Box>
     );
 }
