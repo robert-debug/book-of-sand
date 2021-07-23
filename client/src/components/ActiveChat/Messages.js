@@ -15,7 +15,7 @@ const Messages = (props) => {
     }
   }));
   const classes = useStyles();
-  
+
   return (
     <Box>
       {messages.map((message, i) => {
@@ -29,7 +29,7 @@ const Messages = (props) => {
           <>
           <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} />
           {
-            messages.length - 1 === i ? (<Avatar variant={'square'} alt={otherUser.username} src={otherUser.photoUrl} className={classes.avatar}></Avatar>) : null
+            messages.length - 1 === i ? (<Avatar alt={otherUser.username} src={otherUser.photoUrl} className={classes.avatar}></Avatar>) : null
           }
           </>
         );
