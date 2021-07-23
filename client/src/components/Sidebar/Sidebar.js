@@ -29,13 +29,14 @@ const Sidebar = (props) => {
   let count = 0
   const conversationLength = useSelector(state => {
     state.conversations.forEach((convo)=>{
-      if(!messageCountObj[convo.id]){
         messageCountObj[convo.id] = 0
-      }
         convo.messages.forEach((message)=>{
             count += 1;
-            if (messageCountObj && message.unread){
+            console.log(message)
+            console.log(messageCountObj)
+            if (messageCountObj && message.unread && message.senderId === convo.otherUser.id){
               messageCountObj[convo.id] += 1
+              console.log('bang')
             } 
         })
     });
