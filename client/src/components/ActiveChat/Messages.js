@@ -2,10 +2,17 @@ import React from "react";
 import { Box, Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { SenderBubble, OtherUserBubble } from "../ActiveChat";
+import { useDispatch } from 'react-redux'
 import moment from "moment";
+import { readMessage } from '../../store/utils/thunkCreators';
 
 const Messages = (props) => {
   const { messages, otherUser, userId } = props;
+  const dispatch = useDispatch();
+  const onLoad = (messageId) =>{
+    const body = { recipientId: userId, messageId }
+    dispatch(readMessage(body))
+  }
   const useStyles = makeStyles(() => ({
     avatar: {
       height: 25,
@@ -26,8 +33,9 @@ const Messages = (props) => {
           <SenderBubble key={message.id} text={message.text} time={time} />
           </>
         ) : (
+
           <>
-          <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} />
+          <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} onLoad={onLoad} messageId={message.id} />
           {
             messages.length - 1 === i ? (<Avatar alt={otherUser.username} src={otherUser.photoUrl} className={classes.avatar}></Avatar>) : null
           }
