@@ -1,12 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import { Box } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
-import { withStyles } from "@material-ui/core/styles";
 import { setActiveChat } from "../../store/activeConversation";
 import { connect } from "react-redux";
 import UnreadCounter from "./UnreadCounter";
+import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch } from "react-redux";
 
-const styles = {
+
+const useStyles = makeStyles(() => ({
   root: {
     borderRadius: 8,
     height: 80,
@@ -18,28 +20,22 @@ const styles = {
       cursor: "grab",
     },
   },
-};
+}));
+
 let counter = 0;
 
-class Chat extends Component {
-  handleClick = async (conversation) => {
-    counter = 0;
-    await this.props.setActiveChat(conversation.otherUser.username);
-  };
-
-  render() {
-    const { classes } = this.props;
-    const otherUser = this.props.conversation.otherUser;
-    let counter = 0;
-    this.props.conversation.messages.forEach((message)=>{
-        if (this.props.conversation.otherUser.id === message.senderId && message.unread === true){
-            counter += 1;
-        }
-    })
+const Chat = (props)=>{ 
+    const dispatch = useDispatch()
+    const handleClick = async (conversation) => {
+      counter = 0;
+        await dispatch(setActiveChat(conversation.otherUser.username));
+    };
+    const classes  = useStyles();
+    const otherUser = props.conversation.otherUser;
 
     return (
       <Box
-        onClick={() => this.handleClick(this.props.conversation, counter)}
+        onClick={() => handleClick(props.conversation)}
         className={classes.root}
       >
         <BadgeAvatar
@@ -48,22 +44,10 @@ class Chat extends Component {
           online={otherUser.online}
           sidebar={true}
         />
-        <ChatContent conversation={this.props.conversation} />
-        <UnreadCounter conversation={this.props.conversation} counter={counter}/>
+        <ChatContent conversation={props.conversation} />
+        <UnreadCounter conversation={props.conversation} counter={counter}/>
       </Box>
     );
-  }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setActiveChat: (id) => {
-      dispatch(setActiveChat(id));
-    },
-  };
-};
-// const mapStateToProps = (state) =>({
-//    user: state.user 
-// });
-
-export default connect(null, mapDispatchToProps)(withStyles(styles)(Chat));
+export default Chat;
