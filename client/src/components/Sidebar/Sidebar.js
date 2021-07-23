@@ -32,17 +32,13 @@ const Sidebar = (props) => {
         messageCountObj[convo.id] = 0
         convo.messages.forEach((message)=>{
             count += 1;
-            console.log(message)
-            console.log(messageCountObj)
             if (messageCountObj && message.unread && message.senderId === convo.otherUser.id){
               messageCountObj[convo.id] += 1
-              console.log('bang')
             } 
         })
     });
     return count;
 })
-  console.log(conversations)
   return (
     <Box className={classes.root}>
       <CurrentUser />
